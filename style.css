@@ -1,0 +1,123 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面背景 */
+body {
+    font-family: "STKaiti", "KaiTi", "SimSun", serif;
+    background: linear-gradient(135deg, #f5f1e6, #e8dcc7);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 主容器 */
+.container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 标题 */
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+    color: #5a3e2b;
+}
+
+/* 诗人列表 */
+.poet-list {
+    list-style: none;
+}
+
+/* 每一项 */
+.poet-list li {
+    margin: 15px 0;
+}
+
+/* 链接样式 */
+.poet-list a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    background: #faf7f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+/* 悬停效果 */
+.poet-list a:hover {
+    background: #f0e6d6;
+    transform: translateX(5px);
+    border-left: 5px solid #8b5e3c;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 朝代说明 */
+.dynasty {
+    font-size: 14px;
+    color: #888;
+    margin-left: 10px;
+}
+
+/* 页脚 */
+.footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+    background: #3e2f23;
+    color: #eee;
+    text-align: center;
+}
+
+/* 页脚标题 */
+.footer h3 {
+    margin-bottom: 15px;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+/* 链接区域 */
+.footer-links {
+    margin-bottom: 15px;
+}
+
+/* 页脚链接 */
+.footer-links a {
+    margin: 0 10px;
+    color: #d6c3a3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* 悬停 */
+.footer-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* 版权 */
+.copyright {
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+    .container {
+        margin: 30px 15px;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
