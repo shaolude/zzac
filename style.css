@@ -1,123 +1,382 @@
-/* 全局样式重置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ================================================
+   中国古诗词 · style.css
+   风格：水墨宣纸 · 古典雅致
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Ma+Shan+Zheng&display=swap');
+
+/* ===== CSS 变量 ===== */
+:root {
+  --paper:      #f7f1e6;
+  --paper-dark: #ede3ce;
+  --paper-mid:  #f0e8d5;
+  --ink:        #1c1409;
+  --ink-mid:    #3a2d1a;
+  --ink-light:  #6b5a42;
+  --gold:       #b5820a;
+  --gold-light: #d4a843;
+  --gold-pale:  rgba(181,130,10,0.12);
+  --red:        #8b1c1c;
+  --red-pale:   rgba(139,28,28,0.08);
+  --shadow-sm:  rgba(28,20,9,0.08);
+  --shadow-md:  rgba(28,20,9,0.15);
+  --shadow-lg:  rgba(28,20,9,0.25);
 }
 
-/* 页面背景 */
+/* ===== 全局重置 ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== 页面基础 ===== */
 body {
-    font-family: "STKaiti", "KaiTi", "SimSun", serif;
-    background: linear-gradient(135deg, #f5f1e6, #e8dcc7);
-    color: #333;
-    line-height: 1.6;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Songti SC', '宋体', serif;
+  font-weight: 400;
+  line-height: 1.8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* 主容器 */
+/* 宣纸格纹背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 47px,
+      rgba(181,130,10,0.06) 47px,
+      rgba(181,130,10,0.06) 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 47px,
+      rgba(181,130,10,0.04) 47px,
+      rgba(181,130,10,0.04) 48px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 顶部朱红横条 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--red) 0%, #c0392b 40%, var(--gold) 60%, var(--red) 100%);
+  z-index: 999;
+}
+
+/* ===== 主容器 ===== */
 .container {
-    max-width: 800px;
-    margin: 60px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 72px 32px 60px;
+  position: relative;
+  z-index: 1;
 }
 
-/* 标题 */
-h1 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 30px;
-    letter-spacing: 4px;
-    color: #5a3e2b;
+/* ===== 页面标题 H1 ===== */
+.container h1 {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.35em;
+  text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+  padding-bottom: 32px;
+
+  /* 毛笔字阴影质感 */
+  text-shadow: 2px 3px 0 rgba(28,20,9,0.08), 0 0 40px rgba(181,130,10,0.1);
+
+  animation: fadeDown 0.8s ease both;
 }
 
-/* 诗人列表 */
+/* 标题下方装饰线 */
+.container h1::after {
+  content: '❦';
+  display: block;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0;
+  margin-top: 12px;
+  opacity: 0.85;
+  position: relative;
+}
+
+.container h1::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ===== 诗人列表 ===== */
 .poet-list {
-    list-style: none;
+  list-style: none;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(181,130,10,0.2);
+  background: linear-gradient(160deg, #fdfaf3, var(--paper-mid));
+  box-shadow: 0 4px 24px var(--shadow-sm), inset 0 0 60px rgba(255,252,240,0.6);
+
+  animation: fadeUp 0.9s 0.2s ease both;
 }
 
-/* 每一项 */
 .poet-list li {
-    margin: 15px 0;
+  border-bottom: 1px solid rgba(181,130,10,0.15);
+  position: relative;
+  overflow: hidden;
 }
 
-/* 链接样式 */
+.poet-list li:last-child {
+  border-bottom: none;
+}
+
+/* 左侧朱红竖线 */
+.poet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--red), var(--gold));
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.poet-list li:hover::before {
+  transform: scaleY(1);
+}
+
 .poet-list a {
-    display: block;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: #333;
-    background: #faf7f0;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border-left: 5px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px 22px 32px;
+  text-decoration: none;
+  color: var(--ink-mid);
+  font-size: 1.15rem;
+  letter-spacing: 0.25em;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
-/* 悬停效果 */
+/* 悬停背景扫过效果 */
+.poet-list a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--gold-pale), var(--red-pale));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
 .poet-list a:hover {
-    background: #f0e6d6;
-    transform: translateX(5px);
-    border-left: 5px solid #8b5e3c;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  color: var(--ink);
+  padding-left: 36px;
+  letter-spacing: 0.3em;
 }
 
-/* 朝代说明 */
+.poet-list a:hover::after {
+  opacity: 1;
+}
+
+/* 朝代标签 */
 .dynasty {
-    font-size: 14px;
-    color: #888;
-    margin-left: 10px;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  font-weight: 300;
+  background: rgba(181,130,10,0.08);
+  border: 1px solid rgba(181,130,10,0.2);
+  padding: 3px 12px;
+  border-radius: 1px;
+  transition: all 0.3s;
+  white-space: nowrap;
 }
 
-/* 页脚 */
+.poet-list a:hover .dynasty {
+  background: rgba(181,130,10,0.15);
+  border-color: var(--gold);
+  color: var(--ink-mid);
+}
+
+/* 列表右侧箭头装饰 */
+.poet-list a::before {
+  content: '›';
+  position: absolute;
+  right: 28px;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.poet-list a:hover::before {
+  opacity: 0.7;
+  transform: translateX(0);
+}
+
+/* ===== 页脚 ===== */
 .footer {
-    margin-top: 60px;
-    padding: 30px 20px;
-    background: #3e2f23;
-    color: #eee;
-    text-align: center;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--paper-mid) 0%, var(--paper-dark) 100%);
+  border-top: 1px solid rgba(181,130,10,0.2);
+  padding: 48px 32px 36px;
+  text-align: center;
 }
 
-/* 页脚标题 */
+/* 页脚顶部金线 */
+.footer::before {
+  content: '';
+  display: block;
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 36px;
+}
+
 .footer h3 {
-    margin-bottom: 15px;
-    font-weight: normal;
-    letter-spacing: 2px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 1.4rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.5em;
+  font-weight: 400;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
 }
 
-/* 链接区域 */
+.footer h3::before,
+.footer h3::after {
+  content: '·';
+  color: var(--gold);
+  margin: 0 0.6em;
+}
+
+/* 友情链接区域 */
 .footer-links {
-    margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-/* 页脚链接 */
 .footer-links a {
-    margin: 0 10px;
-    color: #d6c3a3;
-    text-decoration: none;
-    transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 24px;
+  text-decoration: none;
+  color: var(--ink-light);
+  font-size: 0.83rem;
+  letter-spacing: 0.2em;
+  border: 1px solid rgba(181,130,10,0.28);
+  background: rgba(255,252,240,0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* 悬停 */
+/* 悬停时墨水渗透效果 */
+.footer-links a::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
 .footer-links a:hover {
-    color: #fff;
-    text-decoration: underline;
+  color: var(--ink);
+  border-color: var(--gold);
+  background: rgba(181,130,10,0.07);
+  box-shadow: 0 2px 12px var(--shadow-sm);
+  transform: translateY(-2px);
 }
 
-/* 版权 */
+.footer-links a:hover::before {
+  transform: scaleX(1);
+}
+
+/* 版权信息 */
 .copyright {
-    font-size: 13px;
-    color: #aaa;
+  font-size: 0.7rem;
+  color: var(--ink-light);
+  letter-spacing: 0.4em;
+  opacity: 0.65;
+  margin-top: 8px;
 }
 
-/* 响应式 */
-@media (max-width: 600px) {
-    .container {
-        margin: 30px 15px;
-        padding: 20px;
-    }
+/* ===== 入场动画 ===== */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-    h1 {
-        font-size: 28px;
-    }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 560px) {
+  .container {
+    padding: 64px 20px 48px;
+  }
+
+  .poet-list a {
+    padding: 18px 20px 18px 24px;
+    font-size: 1rem;
+  }
+
+  .dynasty {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+  }
+
+  .footer {
+    padding: 36px 20px 28px;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    padding: 8px 16px;
+  }
 }
