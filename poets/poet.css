@@ -1,0 +1,340 @@
+/* ================================================
+   中国古诗词 · poet.css
+   风格：水墨宣纸 · 诗词阅读专用
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Ma+Shan+Zheng&display=swap');
+
+/* ===== CSS 变量（与 style.css 保持一致） ===== */
+:root {
+  --paper:      #f7f1e6;
+  --paper-dark: #ede3ce;
+  --paper-mid:  #f0e8d5;
+  --ink:        #1c1409;
+  --ink-mid:    #3a2d1a;
+  --ink-light:  #6b5a42;
+  --gold:       #b5820a;
+  --gold-light: #d4a843;
+  --gold-pale:  rgba(181,130,10,0.12);
+  --red:        #8b1c1c;
+  --shadow-sm:  rgba(28,20,9,0.08);
+  --shadow-md:  rgba(28,20,9,0.15);
+}
+
+/* ===== 全局重置 ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== 页面基础（与 style.css 一致） ===== */
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Songti SC', '宋体', serif;
+  font-weight: 400;
+  line-height: 1.8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 宣纸格纹背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 47px,
+      rgba(181,130,10,0.06) 47px,
+      rgba(181,130,10,0.06) 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 47px,
+      rgba(181,130,10,0.04) 47px,
+      rgba(181,130,10,0.04) 48px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 顶部朱红横条 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--red) 0%, #c0392b 40%, var(--gold) 60%, var(--red) 100%);
+  z-index: 999;
+}
+
+/* ===== 返回导航 ===== */
+.nav-back {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 28px 32px 0;
+}
+
+.nav-back a {
+  text-decoration: none;
+  color: var(--ink-light);
+  font-size: 0.82rem;
+  letter-spacing: 0.3em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.nav-back a:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold-light);
+}
+
+/* ===== 诗人 & 页面标题 ===== */
+.page-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 52px 32px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-header .poet-name {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.5em;
+  text-shadow: 2px 3px 0 rgba(28,20,9,0.08);
+  animation: fadeDown 0.8s ease both;
+}
+
+.page-header .poet-meta {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.5em;
+  font-weight: 300;
+  animation: fadeDown 0.8s 0.1s ease both;
+}
+
+/* 标题分隔装饰 */
+.page-header .divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+  animation: fadeDown 0.8s 0.15s ease both;
+}
+
+.page-header .divider::before,
+.page-header .divider::after {
+  content: '';
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.page-header .divider::after {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.page-header .divider span {
+  color: var(--gold);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ===== 诗词主区域 ===== */
+.poems-container {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ===== 单首诗词卡片 ===== */
+.poem-card {
+  background: linear-gradient(160deg, #fdfaf3, var(--paper-mid));
+  border: 1px solid rgba(181,130,10,0.2);
+  box-shadow: 0 4px 24px var(--shadow-sm), inset 0 0 60px rgba(255,252,240,0.6);
+  padding: 36px 44px 32px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.7s ease both;
+}
+
+/* 卡片左上角角线装饰 */
+.poem-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 32px; height: 32px;
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+  opacity: 0.5;
+}
+
+.poem-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 32px; height: 32px;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+  opacity: 0.5;
+}
+
+/* 诗名标题 */
+.poem-card h1,
+.poem-card h2 {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-weight: 400;
+  color: var(--red);
+  letter-spacing: 0.35em;
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+  padding-bottom: 18px;
+  font-size: 1.55rem;
+}
+
+.poem-card h1::after,
+.poem-card h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* 诗句 */
+.poem-card p {
+  text-align: center;
+  font-size: 1.12rem;
+  line-height: 2.6;
+  letter-spacing: 0.3em;
+  color: var(--ink-mid);
+  margin-bottom: 0;
+}
+
+/* 诗句悬停高亮 */
+.poem-card p:hover {
+  color: var(--ink);
+  background: rgba(181,130,10,0.04);
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+
+/* ===== 页脚返回按钮 ===== */
+.footer-nav {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 32px 60px;
+}
+
+.footer-nav a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--ink-light);
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  padding: 12px 36px;
+  border: 1px solid rgba(181,130,10,0.28);
+  background: rgba(255,252,240,0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-nav a::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--ink);
+  border-color: var(--gold);
+  background: rgba(181,130,10,0.07);
+  box-shadow: 0 2px 12px var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.footer-nav a:hover::before {
+  transform: scaleX(1);
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 错开每张卡片入场 */
+.poem-card:nth-child(1) { animation-delay: 0.2s; }
+.poem-card:nth-child(2) { animation-delay: 0.35s; }
+.poem-card:nth-child(3) { animation-delay: 0.5s; }
+.poem-card:nth-child(4) { animation-delay: 0.65s; }
+.poem-card:nth-child(5) { animation-delay: 0.8s; }
+
+/* ===== 响应式 ===== */
+@media (max-width: 560px) {
+  .poems-container {
+    padding: 0 16px 60px;
+    gap: 28px;
+  }
+
+  .poem-card {
+    padding: 28px 24px 24px;
+  }
+
+  .poem-card h1,
+  .poem-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .poem-card p {
+    font-size: 1rem;
+    line-height: 2.4;
+  }
+
+  .page-header {
+    padding: 44px 20px 32px;
+  }
+}
